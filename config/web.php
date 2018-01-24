@@ -19,10 +19,10 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],
+        // 'user' => [
+        //     'identityClass' => 'app\models\User',
+        //     'enableAutoLogin' => true,
+        // ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -31,7 +31,15 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            // 'useFileTransport' => true,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'rcentral517.webserversystems.com',
+                'username' => 'developers@particles.co.ke',
+                'password' => 'khk/1244/06',
+                'port' => '465',
+                'encryption' => 'ssl',
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -43,16 +51,30 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
     ],
     'params' => $params,
+
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableFlashMessages' => false,
+            'admins' => ['admin', 'henryohanga'],
+            'mailer' => [
+                'sender' => ['developers@particles.co.ke' => 'My App Developer'],
+            ]
+        ],
+
+        'rbac' => [
+            'class' => 'dektrium\rbac\RbacWebModule',
+        ],
+    ],
+    
 ];
 
 if (YII_ENV_DEV) {
