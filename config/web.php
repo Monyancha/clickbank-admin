@@ -57,6 +57,22 @@ $config = [
             'rules' => [
             ],
         ],
+
+        'assetManager' => [
+            'bundles' => [
+                'dmstr\web\AdminLteAsset' => [
+                    'skin' => 'skin-black-light',
+                ],
+            ],
+        ],
+
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@dektrium/user/views' => '@app/views/user'
+                ],
+            ],
+        ],
     ],
     'params' => $params,
 
@@ -67,7 +83,35 @@ $config = [
             'admins' => ['admin', 'henryohanga'],
             'mailer' => [
                 'sender' => ['developers@particles.co.ke' => 'My App Developer'],
-            ]
+            ],
+
+            'controllerMap' => [
+                'security' => 'app\controllers\user\SecurityController',
+                'registration' => [
+                    'class' => 'app\controllers\user\RegistrationController',
+                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_REGISTER => function ($e) {
+                        Yii::$app->response->redirect(array('/user/security/login'))->send();
+                        Yii::$app->end();
+                    },
+
+                    'on ' . \dektrium\user\controllers\RegistrationController::EVENT_AFTER_RESEND => function ($e) {
+                        Yii::$app->response->redirect(array('/user/security/login'))->send();
+                        Yii::$app->end();
+                    } 
+                ],
+                'recovery' => [
+                    'class' => 'app\controllers\user\RecoveryController',
+                    'on ' . \dektrium\user\controllers\RecoveryController::EVENT_AFTER_RESET => function ($e) {
+                        Yii::$app->response->redirect(array('/site/index'))->send();
+                        Yii::$app->end();
+                    },
+
+                    'on ' . \dektrium\user\controllers\RecoveryController::EVENT_AFTER_REQUEST => function ($e) {
+                        Yii::$app->response->redirect(array('/user/security/login'))->send();
+                        Yii::$app->end();
+                    },
+                ],
+            ],
         ],
 
         'rbac' => [
