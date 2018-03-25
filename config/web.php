@@ -80,7 +80,7 @@ $config = [
         'user' => [
             'class' => 'dektrium\user\Module',
             'enableFlashMessages' => false,
-            'admins' => ['admin', 'henryohanga'],
+            'admins' => ['admin', 'henryohanga', 'robga'],
             'mailer' => [
                 'sender' => ['developers@particles.co.ke' => 'My App Developer'],
             ],

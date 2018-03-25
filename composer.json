@@ -20,7 +20,8 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "dektrium/yii2-user": "^0.9.13",
         "dektrium/yii2-rbac": "1.0.0-alpha@dev",
-        "dmstr/yii2-adminlte-asset": "^2.6"
+        "dmstr/yii2-adminlte-asset": "^2.6",
+        "mashape/unirest-php": "^3.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
